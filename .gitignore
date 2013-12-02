@@ -1,0 +1,8 @@
+.vagrant
+
+*.bak
+*.DS_Store*
+*.sublime*
+*.sw*
+*~
+

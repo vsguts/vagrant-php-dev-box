@@ -26,11 +26,14 @@ sed -i 's/html_errors = Off/html_errors = On/g' /etc/php5/apache2/php.ini
 sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php5/apache2/php.ini
 sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 122M/g' /etc/php5/apache2/php.ini
 sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/php5/apache2/php.ini
+
 pecl install xdebug
 echo "" >> /etc/php5/apache2/php.ini
 echo "# gvs" >> /etc/php5/apache2/php.ini
 echo "extension=xdebug.so" >> /etc/php5/apache2/php.ini
+
 pecl install redis
+echo "extension=redis.so" >> /etc/php5/apache2/php.ini
 
 # additions
 apt-get install -q -y redis-server

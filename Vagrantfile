@@ -27,11 +27,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 80, host: 8080 # web-server
-  config.vm.network :forwarded_port, guest: 3306, host: 3306 # mysql
+  config.vm.network :forwarded_port, guest: 3306, host: 3307 # mysql
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network :private_network, ip: "192.168.33.10"
+  config.vm.network :private_network, ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -46,9 +46,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../www", "/var/www",
-    :mount_options => ['dmode=777', 'fmode=777']
-    # id: "vagrant-root", extra: "dmode=777,fmode=777"
+  config.vm.synced_folder "~/Sites", "/var/www",
+    # :mount_options => ['dmode=777', 'fmode=777'],
+    :nfs => true
     # owner: "root", group: "root"
 
   # Provider-specific configuration so you can fine-tune various
@@ -66,7 +66,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  config.vm.provision :shell, :path => "recipes/bootstrap.sh"
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.

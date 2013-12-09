@@ -1,6 +1,9 @@
 # pre
 apt-get update
 
+# nfs
+apt-get install nfs-common
+
 # mysql
 export DEBIAN_FRONTEND=noninteractive
 apt-get install -q -y mysql-server mysql-client

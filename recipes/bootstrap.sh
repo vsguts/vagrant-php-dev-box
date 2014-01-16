@@ -60,3 +60,4 @@ apt-get install -q -y phpmyadmin
 
 # post:
 # dpkg-reconfigure phpmyadmin
+# dpkg-reconfigure locales

@@ -28,7 +28,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 80, host: 8080 # web-server
   config.vm.network :forwarded_port, guest: 3306, host: 3306 # mysql
-  config.vm.network :forwarded_port, guest: 9000, host: 9000 # xdebug
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

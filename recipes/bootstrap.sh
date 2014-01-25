@@ -19,6 +19,9 @@ a2enmod rewrite
 a2enmod ssl
 a2ensite default-ssl
 
+echo "" >> /etc/apache2/apache2.conf
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # apache: AllowOverrid (replace setting between 9 and 15 string of the vhost config)
 cp /etc/apache2/sites-available/default /etc/apache2/sites-available/default.bak
 sed -i '9,15s/AllowOverride None/AllowOverride All/g' /etc/apache2/sites-available/default
@@ -39,8 +42,16 @@ echo "" >> /etc/php5/cli/php.ini
 echo "# gvs" >> /etc/php5/apache2/php.ini
 echo "# gvs" >> /etc/php5/cli/php.ini
 
-pecl install xdebug
-echo "extension=xdebug.so" >> /etc/php5/apache2/php.ini
+# php xdebug
+apt-get install -q -y php5-xdebug
+echo "" >> /etc/php5/mods-available/xdebug.ini
+echo "xdebug.remote_enable = 1" >> /etc/php5/mods-available/xdebug.ini
+echo "xdebug.remote_port = 9000" >> /etc/php5/mods-available/xdebug.ini
+echo "xdebug.remote_host=10.0.2.2" >> /etc/php5/mods-available/xdebug.ini
+echo "xdebug.remote_handler=dbgp" >> /etc/php5/mods-available/xdebug.ini
+echo ";xdebug.remote_log=\"/var/log/xdebug/xdebug.log\"" >> /etc/php5/mods-available/xdebug.ini
+# pecl install xdebug
+# echo "extension=xdebug.so" >> /etc/php5/apache2/php.ini
 # echo "extension=xdebug.so" >> /etc/php5/cli/php.ini
 
 pecl install redis
@@ -63,9 +74,11 @@ apt-get install -q -y htop
 apt-get install -q -y mc
 apt-get install -q -y tmux screen
 
-
 # tools
 apt-get install -q -y phpmyadmin
+
+# common config
+echo "10.0.2.2    gvs.u.simtech" >> /etc/hosts
 
 # post:
 # dpkg-reconfigure phpmyadmin

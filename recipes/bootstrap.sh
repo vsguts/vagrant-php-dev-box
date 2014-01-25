@@ -16,10 +16,14 @@ export DEBIAN_FRONTEND=
 # apache
 apt-get install -q -y apache2
 a2enmod rewrite
+a2enmod ssl
+a2ensite default-ssl
 
 # apache: AllowOverrid (replace setting between 9 and 15 string of the vhost config)
 cp /etc/apache2/sites-available/default /etc/apache2/sites-available/default.bak
 sed -i '9,15s/AllowOverride None/AllowOverride All/g' /etc/apache2/sites-available/default
+cp /etc/apache2/sites-available/default-ssl /etc/apache2/sites-available/default-ssl.bak
+sed -i '10,16s/AllowOverride None/AllowOverride All/g' /etc/apache2/sites-available/default-ssl
 
 # php
 apt-get install -q -y php5 php-pear php5-dev php5-mysql php5-curl make

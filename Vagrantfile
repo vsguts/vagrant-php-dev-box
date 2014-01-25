@@ -27,6 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 80, host: 8080 # web-server
+  config.vm.network :forwarded_port, guest: 443, host: 8443 # web-server
   config.vm.network :forwarded_port, guest: 3306, host: 3306 # mysql
 
   # Create a private network, which allows host-only access to the machine
@@ -130,3 +131,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
 end
+
+# To enable web server on host machine, you may use one of several ways:
+# 1. Use directly http://localhost:8080/
+
+# 2. Apache-proxy. Add to /etc/apache2/httpd.conf:
+# <Location />
+#     ProxyPass http://localhost:8080/
+# </Location>
+# ProxyPreserveHost On
+
+# 3. ipfw-forwarding. Add rules:
+# sudo ipfw add 100 fwd 127.0.0.1,8080 tcp from any to me 80
+# sudo ipfw add 101 fwd 127.0.0.1,8443 tcp from any to me 443

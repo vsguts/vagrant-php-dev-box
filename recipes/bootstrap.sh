@@ -39,8 +39,8 @@ sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/p
 
 echo "" >> /etc/php5/apache2/php.ini
 echo "" >> /etc/php5/cli/php.ini
-echo "# gvs" >> /etc/php5/apache2/php.ini
-echo "# gvs" >> /etc/php5/cli/php.ini
+echo "; gvs" >> /etc/php5/apache2/php.ini
+echo "; gvs" >> /etc/php5/cli/php.ini
 
 # php xdebug
 apt-get install -q -y php5-xdebug

@@ -2,7 +2,7 @@
 apt-get update
 
 # nfs
-apt-get install nfs-common
+apt-get install -q -y nfs-common
 
 # mysql
 export DEBIAN_FRONTEND=noninteractive

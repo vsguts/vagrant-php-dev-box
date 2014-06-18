@@ -23,24 +23,16 @@ echo "" >> /etc/apache2/apache2.conf
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # apache: AllowOverrid (replace setting between 9 and 15 string of the vhost config)
-cp /etc/apache2/sites-available/default /etc/apache2/sites-available/default.bak
-sed -i '9,15s/AllowOverride None/AllowOverride All/g' /etc/apache2/sites-available/default
-cp /etc/apache2/sites-available/default-ssl /etc/apache2/sites-available/default-ssl.bak
-sed -i '10,16s/AllowOverride None/AllowOverride All/g' /etc/apache2/sites-available/default-ssl
+sed -i '164,168s/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
 # php
 apt-get install -q -y php5 php-pear php5-dev php5-mysql php5-curl make
 cp /etc/php5/apache2/php.ini /etc/php5/apache2/php.ini.bak
 sed -i 's/display_errors = Off/display_errors = On/g' /etc/php5/apache2/php.ini
-sed -i 's/html_errors = Off/html_errors = On/g' /etc/php5/apache2/php.ini
+# sed -i 's/html_errors = Off/html_errors = On/g' /etc/php5/apache2/php.ini
 sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php5/apache2/php.ini
 sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 122M/g' /etc/php5/apache2/php.ini
 sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/php5/apache2/php.ini
-
-echo "" >> /etc/php5/apache2/php.ini
-echo "" >> /etc/php5/cli/php.ini
-echo "; gvs" >> /etc/php5/apache2/php.ini
-echo "; gvs" >> /etc/php5/cli/php.ini
 
 # php xdebug
 apt-get install -q -y php5-xdebug
@@ -50,13 +42,8 @@ echo "xdebug.remote_port = 9000" >> /etc/php5/mods-available/xdebug.ini
 echo "xdebug.remote_host=10.0.2.2" >> /etc/php5/mods-available/xdebug.ini
 echo "xdebug.remote_handler=dbgp" >> /etc/php5/mods-available/xdebug.ini
 echo ";xdebug.remote_log=\"/var/log/xdebug/xdebug.log\"" >> /etc/php5/mods-available/xdebug.ini
-# pecl install xdebug
-# echo "extension=xdebug.so" >> /etc/php5/apache2/php.ini
-# echo "extension=xdebug.so" >> /etc/php5/cli/php.ini
 
-pecl install redis
-echo "extension=redis.so" >> /etc/php5/apache2/php.ini
-echo "extension=redis.so" >> /etc/php5/cli/php.ini
+apt-get -q -y install libphp-predis
 
 # additions
 apt-get install -q -y redis-server

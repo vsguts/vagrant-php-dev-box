@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.9.9"
 
-  config.vm.synced_folder "www", "/var/www",
+  config.vm.synced_folder "~/www", "/var/www",
     :nfs => true
 
   config.vm.provision :shell, :path => "bootstrap.sh"

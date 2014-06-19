@@ -35,7 +35,7 @@ sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 122M/g' /etc/php5/apach
 sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/php5/apache2/php.ini
 
 # php xdebug
-apt-get install -q -y php5-xdebug
+apt-get install -q -y php5-redis php5-xdebug
 echo "" >> /etc/php5/mods-available/xdebug.ini
 echo "xdebug.remote_enable = 1" >> /etc/php5/mods-available/xdebug.ini
 echo "xdebug.remote_port = 9000" >> /etc/php5/mods-available/xdebug.ini

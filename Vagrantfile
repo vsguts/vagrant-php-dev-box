@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: "192.168.9.9"
 
   config.vm.synced_folder "~/www", "/var/www",
-    :nfs => { :mount_options => ["udp", "dmode=775", "fmode=774", "uid=33", "gid=33", "noac" ] }
+    :nfs => { :mount_options => ["udp", "dmode=775", "fmode=774", "uid=33", "gid=33", "noac", "sync", "lookupcache=none" ] }
 
   config.vm.provision :shell, :path => "bootstrap.sh"
 

@@ -8,8 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.box = "debian-wheezy72-x64-vbox43"
   # config.vm.box_url = "https://puphpet.s3.amazonaws.com/debian-wheezy72-x64-vbox43.box"
 
-  config.vm.box = "ubuntu-tt"
-  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.network :forwarded_port, guest: 80, host: 8080 # web-server
   config.vm.network :forwarded_port, guest: 443, host: 8443 # web-server

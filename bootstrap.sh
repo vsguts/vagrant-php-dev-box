@@ -10,7 +10,9 @@ sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
 service mysql restart
 export DEBIAN_FRONTEND=
 
+#
 # apache
+#
 apt-get install -q -y apache2
 a2enmod rewrite
 a2enmod ssl
@@ -43,13 +45,20 @@ sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/p
 # echo "xdebug.remote_handler=dbgp" >> /etc/php5/mods-available/xdebug.ini
 # echo ";xdebug.remote_log=\"/var/log/xdebug/xdebug.log\"" >> /etc/php5/mods-available/xdebug.ini
 
-# additions
-apt-get install -q -y redis-server
-
-# final
 service apache2 restart
+#
+# /apache
+#
 
-# common
+#
+# nginx
+#
+apt-get install -q -y nginx
+#
+# /nginx
+#
+
+apt-get install -q -y redis-server
 apt-get install -q -y postfix
 apt-get install -q -y zsh
 apt-get install -q -y git

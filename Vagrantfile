@@ -18,7 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: "192.168.9.9"
 
   config.vm.synced_folder "~/www", "/var/www",
-    :nfs => { :mount_options => ["noac", "sync", "lookupcache=none" ] }
+    :nfs => true
+    # :nfs => { :mount_options => ["noac", "sync", "lookupcache=none" ] }
 
   config.vm.provision :shell, :path => "bootstrap.sh"
 

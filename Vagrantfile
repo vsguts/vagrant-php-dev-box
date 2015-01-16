@@ -2,17 +2,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # config.vm.box = "wheezy32"
-  # config.vm.box_url = "http://tools.swergroup.com/downloads/wheezy32.box"
-
-  # config.vm.box = "debian-wheezy72-x64-vbox43"
-  # config.vm.box_url = "https://puphpet.s3.amazonaws.com/debian-wheezy72-x64-vbox43.box"
-
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.network :forwarded_port, guest: 80, host: 8080 # nginx
+  config.vm.network :forwarded_port, guest: 443, host: 8443 # nginx ssl
   config.vm.network :forwarded_port, guest: 8081, host: 8081 # apache
-  config.vm.network :forwarded_port, guest: 443, host: 8443 # apache ssl
   config.vm.network :forwarded_port, guest: 3306, host: 3307 # mysql
 
   config.vm.network :private_network, ip: "192.168.9.9"

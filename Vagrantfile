@@ -11,10 +11,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :private_network, ip: "192.168.9.9"
 
-  config.vm.synced_folder "~/www", "/var/www",
-    :nfs => true
-    # :nfs => { :mount_options => ["noac", "sync", "lookupcache=none" ] }
-
+  config.vm.synced_folder "~/www", "/var/www", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc']
+  config.nfs.map_uid = Process.uid
+  config.nfs.map_gid = Process.gid
+  
   config.vm.provision :shell, :path => "bootstrap.sh"
 
 end

@@ -6,7 +6,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :forwarded_port, guest: 80, host: 8080 # nginx
   config.vm.network :forwarded_port, guest: 443, host: 8443 # nginx ssl
-  config.vm.network :forwarded_port, guest: 8081, host: 8081 # apache
+  config.vm.network :forwarded_port, guest: 81, host: 8081 # apache
   config.vm.network :forwarded_port, guest: 3306, host: 3307 # mysql
 
   config.vm.network :private_network, ip: "192.168.9.9"

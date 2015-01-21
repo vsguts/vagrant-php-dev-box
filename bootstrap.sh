@@ -20,11 +20,11 @@ a2ensite default-ssl
 echo "" >> /etc/apache2/apache2.conf
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sed -i '164,168s/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
-sed -i 's/Listen 80/Listen 8081/g' /etc/apache2/ports.conf
-sed -i 's/80/8081/g' /etc/apache2/sites-available/000-default.conf
+sed -i 's/Listen 80/Listen 81/g' /etc/apache2/ports.conf
+sed -i 's/80/81/g' /etc/apache2/sites-available/000-default.conf
 
 # php
-apt-get install -q -y php5 php5-fpm libapache2-mod-php5 php-pear php5-dev php5-mysql php5-curl php5-mcrypt php5-redis php5-imap
+apt-get install -q -y php5 php5-fpm libapache2-mod-php5 php-pear php5-dev php5-mysql php5-curl php5-mcrypt php5-redis php5-imap php5-gd
 cp /etc/php5/apache2/php.ini /etc/php5/apache2/php.ini.bak
 sed -i 's/display_errors = Off/display_errors = On/g' /etc/php5/apache2/php.ini
 sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php5/apache2/php.ini
@@ -53,7 +53,7 @@ service apache2 restart
 #
 # nginx
 #
-apt-get install -q -y nginx
+# apt-get install -q -y nginx-extras
 #
 # /nginx
 #

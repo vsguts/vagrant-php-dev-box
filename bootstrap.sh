@@ -68,6 +68,9 @@ apt-get install -q -y mc
 # tools
 #apt-get install -q -y phpmyadmin
 
+aptitude autoclean
+apt-get clean all
+
 # common config
 echo "10.0.2.2    gvs.u.simtech" >> /etc/hosts
 

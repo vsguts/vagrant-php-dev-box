@@ -2,18 +2,27 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "parallels/ubuntu-14.04"
 
-  config.vm.network :forwarded_port, guest: 80, host: 8080 # nginx
-  config.vm.network :forwarded_port, guest: 443, host: 8443 # nginx ssl
-  config.vm.network :forwarded_port, guest: 81, host: 8081 # apache
-  config.vm.network :forwarded_port, guest: 3306, host: 3307 # mysql
+  # config.vm.network :forwarded_port, guest: 80, host: 8080 # nginx
+  # config.vm.network :forwarded_port, guest: 443, host: 8443 # nginx ssl
+  # config.vm.network :forwarded_port, guest: 81, host: 8081 # apache
+  # config.vm.network :forwarded_port, guest: 3306, host: 3307 # mysql
 
-  config.vm.network :private_network, ip: "192.168.9.9"
+  config.vm.provider "parallels" do |v|
+    v.update_guest_tools = true
+  end
 
-  config.vm.synced_folder "~/www", "/var/www", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc']
-  config.nfs.map_uid = Process.uid
-  config.nfs.map_gid = Process.gid
+  config.vm.provider "parallels" do |v|
+    v.memory = 512
+    v.cpus = 1
+  end
+
+  config.vm.host_name = "dev"
+
+  config.vm.network "private_network", ip: "172.17.0.3"
+
+  config.vm.synced_folder "/Users/gvs/Sites/dev", "/var/www/html"
   
   config.vm.provision :shell, :path => "bootstrap.sh"
 

@@ -20,21 +20,23 @@ a2ensite default-ssl
 echo "" >> /etc/apache2/apache2.conf
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sed -i '164,168s/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
-sed -i 's/Listen 80/Listen 81/g' /etc/apache2/ports.conf
-sed -i 's/80/81/g' /etc/apache2/sites-available/000-default.conf
+# sed -i 's/Listen 80/Listen 81/g' /etc/apache2/ports.conf
+# sed -i 's/80/81/g' /etc/apache2/sites-available/000-default.conf
 
 # php
-apt-get install -q -y php5 php5-fpm libapache2-mod-php5 php-pear php5-dev php5-mysql php5-curl php5-mcrypt php5-redis php5-imap php5-gd
+apt-get install -q -y php5 libapache2-mod-php5 php-pear php5-dev php5-mysql php5-curl php5-mcrypt php5-redis php5-imap php5-gd
 cp /etc/php5/apache2/php.ini /etc/php5/apache2/php.ini.bak
 sed -i 's/display_errors = Off/display_errors = On/g' /etc/php5/apache2/php.ini
 sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php5/apache2/php.ini
 sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 122M/g' /etc/php5/apache2/php.ini
 sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/php5/apache2/php.ini
-cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.bak
-sed -i 's/display_errors = Off/display_errors = On/g' /etc/php5/fpm/php.ini
-sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php5/fpm/php.ini
-sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 122M/g' /etc/php5/fpm/php.ini
-sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/php5/fpm/php.ini
+
+# apt-get install -q -y php5-fpm
+# cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.bak
+# sed -i 's/display_errors = Off/display_errors = On/g' /etc/php5/fpm/php.ini
+# sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php5/fpm/php.ini
+# sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 122M/g' /etc/php5/fpm/php.ini
+# sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/php5/fpm/php.ini
 
 # php xdebug
 # apt-get install -q -y php5-xdebug
@@ -44,6 +46,8 @@ sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' /etc/p
 # echo "xdebug.remote_host=10.0.2.2" >> /etc/php5/mods-available/xdebug.ini
 # echo "xdebug.remote_handler=dbgp" >> /etc/php5/mods-available/xdebug.ini
 # echo ";xdebug.remote_log=\"/var/log/xdebug/xdebug.log\"" >> /etc/php5/mods-available/xdebug.ini
+
+php5enmod mcrypt
 
 service apache2 restart
 #
@@ -58,6 +62,8 @@ service apache2 restart
 # /nginx
 #
 
+apt-get install -q -y curl
+apt-get install -q -y vim
 apt-get install -q -y redis-server
 apt-get install -q -y postfix
 apt-get install -q -y zsh

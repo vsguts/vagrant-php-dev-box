@@ -70,6 +70,7 @@ apt-get install -q -y zsh
 apt-get install -q -y git
 apt-get install -q -y htop
 apt-get install -q -y mc
+apt-get install -q -y mailutils
 
 # tools
 #apt-get install -q -y phpmyadmin

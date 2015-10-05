@@ -1,4 +1,6 @@
-.vagrant
+/.vagrant
+/exchange
+/backup
 
 *.bak
 *.DS_Store*

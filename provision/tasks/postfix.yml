@@ -1,0 +1,5 @@
+---
+- name: Postfix
+  apt: name=postfix state=present
+- name: Postfix mailutils
+  apt: name=mailutils state=present

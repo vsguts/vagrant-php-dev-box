@@ -4,18 +4,10 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "parallels/ubuntu-14.04"
 
-  # config.vm.network :forwarded_port, guest: 80, host: 8080 # nginx
-  # config.vm.network :forwarded_port, guest: 443, host: 8443 # nginx ssl
-  # config.vm.network :forwarded_port, guest: 81, host: 8081 # apache
-  # config.vm.network :forwarded_port, guest: 3306, host: 3307 # mysql
-
-  config.vm.provider "parallels" do |v|
-    v.update_guest_tools = true
-  end
-
   config.vm.provider "parallels" do |v|
     v.memory = 512
     v.cpus = 1
+    v.update_guest_tools = true
   end
 
   config.vm.host_name = "dev"
@@ -24,7 +16,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder "/Users/gvs/Sites/dev", "/var/www/html"
   
-  config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision :ansible do |ansible|
+    ansible.limit = "vagrant"
+    ansible.playbook = "provision/playbook.yml"
+    ansible.inventory_path = "provision/inventory"
+    ansible.extra_vars = {
+      hostname: "gvs.u.simtech",
+      mysql: {
+        root_password: "toor",
+        user: "gvs",
+        password: "gvs",
+      }
+    }
+  end
 
 end
 

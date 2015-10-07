@@ -1,20 +1,55 @@
+require "./local_conf.rb" if File.exist?("./local_conf.rb")
+
+INTERNAL_IP      ||= "172.17.0.3"             # IP-address on private interface
+PROJECT          ||= "dev"
+HOSTNAME         ||= "dev"
+RAM              ||= "512"
+APPLICATION_PATH ||= "../app"
+PROVISION_TAGS   ||= "install"
+
+File.open('./provisioner/inventory', 'w') { |file|
+  file.puts "[vagrant]"
+  file.puts INTERNAL_IP
+}
 
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "parallels/ubuntu-14.04"
 
-  config.vm.provider "parallels" do |v|
-    v.memory = 512
-    v.cpus = 1
-    v.update_guest_tools = true
+  config.vm.host_name = PROJECT + '.' + HOSTNAME
+  config.vm.network "private_network", ip: INTERNAL_IP
+
+  ENV['VAGRANT_DEFAULT_PROVIDER'] ||= "virtualbox"
+  case ENV['VAGRANT_DEFAULT_PROVIDER'].downcase
+  when "parallels"
+
+    config.vm.box = "parallels/ubuntu-14.04"
+    config.vm.synced_folder APPLICATION_PATH, "/var/www/html"
+    config.vm.provider "parallels" do |v|
+      v.memory = RAM
+      v.cpus = 1
+      v.update_guest_tools = true
+    end
+
+  else
+
+    config.vm.box = "ubuntu/trusty64"
+
+    config.vm.synced_folder APPLICATION_PATH, "/var/www/html", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc']
+    # :mount_options => ["udp", "dmode=775", "fmode=774", "uid=33", "gid=33", "noac", "sync", "lookupcache=none" ]
+    # :mount_options => ["noac", "sync", "lookupcache=none" ]
+    config.nfs.map_uid = Process.uid
+    config.nfs.map_gid = Process.gid
+
+    config.vm.provider :virtualbox do |vb|
+      vb.gui = false
+      vb.customize [
+        'modifyvm', :id,
+        '--memory', RAM,
+        '--name',   PROJECT + '.' + HOSTNAME
+      ]
+    end
   end
-
-  config.vm.host_name = "dev"
-
-  config.vm.network "private_network", ip: "172.17.0.3"
-
-  config.vm.synced_folder "/Users/gvs/Sites/dev", "/var/www/html"
   
   config.vm.provision :ansible do |ansible|
     ansible.limit = "vagrant"

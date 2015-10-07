@@ -2,22 +2,21 @@
 - hosts: all
   sudo: true
   tasks:
+    - include: tasks/pre.yml
 
-  - include: tasks/pre.yml
+    - include: tasks/apache.yml
+    - include: tasks/php.yml
+    - include: tasks/mysql.yml
+    - include: tasks/redis.yml
+    - include: tasks/postfix.yml
 
-  - include: tasks/apache.yml
-  - include: tasks/php.yml
-  - include: tasks/mysql.yml
-  - include: tasks/redis.yml
-  - include: tasks/postfix.yml
+    - include: tasks/vim.yml
+    - include: tasks/zsh.yml
 
-  - include: tasks/vim.yml
-  - include: tasks/zsh.yml
+    - include: tasks/post.yml
 
-  - include: tasks/post.yml
-
-  - include: tasks/tools.yml
+    - include: tasks/tools.yml
 
   handlers:
-  - name: Restart Apache
-    service: name=apache state=restarted
+    - name: Restart Apache
+      service: name=apache state=restarted

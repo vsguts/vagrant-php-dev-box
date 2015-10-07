@@ -28,6 +28,7 @@
 
 - name: MySQL custom user
   mysql_user:
+    host: "%"
     name: "{{ mysql.user }}"
     password: "{{ mysql.password }}"
     login_user: root
@@ -44,3 +45,7 @@
   with_items:
     - { user: "vagrant", group: "vagrant", home: "/home/vagrant" }
     - { user: "root", group: "root", home: "/root" }
+
+- name: MySQL bind addr
+  shell: sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
+

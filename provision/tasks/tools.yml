@@ -1,7 +1,10 @@
 ---
+
 - name: MC
   apt: name=mc state=present
+
 - name: Htop
   apt: name=htop state=present
+
 - name: Git
   apt: name=git state=present

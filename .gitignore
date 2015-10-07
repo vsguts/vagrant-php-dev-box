@@ -1,6 +1,7 @@
-/.vagrant
-/exchange
-/backup
+.vagrant
+local_conf.rb
+provisioner/inventory
+exchange
 
 *.bak
 *.DS_Store*

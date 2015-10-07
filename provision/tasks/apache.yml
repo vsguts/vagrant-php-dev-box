@@ -2,21 +2,20 @@
 - name: Install apache2
   apt: name=apache2 state=present
 
-- name: Apache2 Enable Rewrite module
-  shell: a2enmod rewrite
-
-- name: Apache2 Enable Ssl
-  shell: a2enmod ssl
+- name: Apache2 Enable Modules
+  shell: "a2enmod {{item}}"
+  with_items:
+    - rewrite
+    - ssl
 
 - name: Apache2 Enable ssl-defaul site
   shell: a2ensite default-ssl
 
 - name: Apache2 configuring
-  shell: 'echo "{{item.row}}" >> /etc/apache2/apache2.conf'
+  shell: 'echo "{{item}}" >> /etc/apache2/apache2.conf'
   with_items:
-    - { row: "" }
-    - { row: "ServerName {{ hostname }}" }
+    - ""
+    - "ServerName {{ hostname }}"
 
 - name: Apache2 configuring2
   shell: "sed -i '164,168s/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf"
-

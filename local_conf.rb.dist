@@ -1,0 +1,16 @@
+INTERNAL_IP       = "172.17.0.3"
+PROJECT           = "dev"
+HOSTNAME          = "dev"
+RAM               = "512"
+APPLICATION_PATH  = "../app"
+
+PROVISION_TAGS    = "install"
+
+# TAG LIST:
+#
+# install                   Reset all settings (default)
+#
+# Also you can list the tags separated by commas.
+#
+# Example:
+# PROVISION_TAGS = "install,php"

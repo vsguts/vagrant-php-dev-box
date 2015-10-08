@@ -4,13 +4,9 @@ HOSTNAME          = "dev"
 RAM               = "512"
 APPLICATION_PATH  = "../app"
 
-PROVISION_TAGS    = "install"
+PROVISION_TAGS    = "apt,webserver,common"
 
-# TAG LIST:
-#
-# install                   Reset all settings (default)
-#
 # Also you can list the tags separated by commas.
 #
 # Example:
-# PROVISION_TAGS = "install,php"
+# PROVISION_TAGS = "webserver,php,apt"

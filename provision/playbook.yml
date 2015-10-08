@@ -2,11 +2,11 @@
 - hosts: all
   sudo: true
   roles:
-    - apt # preparing
-    - mysql
-    - sqlite
-    - apache
-    - php
-    - postfix
-    - redis
-    - common
+    - { role: apt,     tags: ['apt'] }
+    - { role: mysql,   tags: ['webserver', 'database', 'mysql'] }
+    - { role: sqlite,  tags: ['webserver', 'database', 'sqlite'] }
+    - { role: apache,  tags: ['webserver', 'apache', 'php'] }
+    - { role: php,     tags: ['webserver', 'php'] }
+    - { role: postfix, tags: ['webserver', 'postfix'] }
+    - { role: redis,   tags: ['webserver', 'redis'] }
+    - { role: common,  tags: ['common'] }

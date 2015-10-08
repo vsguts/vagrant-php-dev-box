@@ -5,7 +5,7 @@ PROJECT          ||= "dev"
 HOSTNAME         ||= "dev"
 RAM              ||= "512"
 APPLICATION_PATH ||= "../app"
-# PROVISION_TAGS   ||= ""
+PROVISION_TAGS   ||= "apt,webserver,common"
 
 File.open('./provision/inventory', 'w') { |file|
   file.puts "[vagrant]"

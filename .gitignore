@@ -1,6 +1,6 @@
 .vagrant
 local_conf.rb
-provisioner/inventory
+provision/inventory
 exchange
 
 *.bak

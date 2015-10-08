@@ -1,0 +1,7 @@
+---
+apache_mods:
+  - rewrite
+  - ssl
+
+apache_sites:
+  - default-ssl

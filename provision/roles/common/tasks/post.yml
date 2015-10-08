@@ -1,6 +1,8 @@
 ---
 - name: Host
   shell: 'echo "10.0.2.2    {{ hostname }}" >> /etc/hosts'
+  tags: ['post']
 
 - name: Apt clean-up
   shell: apt-get clean all
+  tags: ['post']

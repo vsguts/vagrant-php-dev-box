@@ -5,9 +5,9 @@ PROJECT          ||= "dev"
 HOSTNAME         ||= "dev"
 RAM              ||= "512"
 APPLICATION_PATH ||= "../app"
-PROVISION_TAGS   ||= "install"
+# PROVISION_TAGS   ||= ""
 
-File.open('./provisioner/inventory', 'w') { |file|
+File.open('./provision/inventory', 'w') { |file|
   file.puts "[vagrant]"
   file.puts INTERNAL_IP
 }
@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provider "parallels" do |v|
       v.memory = RAM
       v.cpus = 1
-      v.update_guest_tools = true
+      # v.update_guest_tools = true
     end
 
   else
@@ -52,16 +52,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   
   config.vm.provision :ansible do |ansible|
+    if(defined? PROVISION_TAGS)
+      ansible.tags = PROVISION_TAGS
+    end
     ansible.limit = "vagrant"
     ansible.playbook = "provision/playbook.yml"
     ansible.inventory_path = "provision/inventory"
     ansible.extra_vars = {
-      hostname: "gvs.u.simtech",
-      mysql: {
-        root_password: "toor",
-        user: "gvs",
-        password: "gvs",
-      }
+      hostname: HOSTNAME,
     }
   end
 

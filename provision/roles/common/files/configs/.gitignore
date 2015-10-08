@@ -1,0 +1,10 @@
+*.log
+*.bak
+*.DS_Store*
+*.sublime*
+*.sw*
+*~
+.buildpath
+.idea
+.project
+nbproject

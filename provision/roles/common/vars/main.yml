@@ -1,0 +1,16 @@
+---
+common_users:
+  - home: /root
+    owner: root
+    group: root
+  - home: /home/vagrant
+    owner: vagrant
+    group: vagrant
+
+common_tools:
+  - ctags
+  - mc
+  - htop
+  - vim
+  - git
+  - zsh

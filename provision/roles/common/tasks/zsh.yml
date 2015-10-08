@@ -1,4 +1,0 @@
----
-
-- name: Zsh
-  apt: name=zsh state=present

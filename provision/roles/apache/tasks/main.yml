@@ -10,10 +10,10 @@
   shell: "a2ensite {{item}}"
   with_items: "{{apache_sites}}"
 
-- name: Apache2 configuring
+- name: Apache2 configuring host
   template:
     src=host.conf.j2
     dest=/etc/apache2/conf-enabled/host.conf
 
-- name: Apache2 configuring2
+- name: Apache2 configuring AlowOverride
   shell: "sed -i '164,168s/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf"

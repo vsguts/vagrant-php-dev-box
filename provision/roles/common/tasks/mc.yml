@@ -1,4 +1,0 @@
----
-
-- name: MC
-  apt: name=mc state=present

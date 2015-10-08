@@ -1,4 +1,0 @@
----
-
-- name: Vim
-  apt: name=vim state=present

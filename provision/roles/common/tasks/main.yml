@@ -1,8 +1,31 @@
 ---
 
-- include: tools.yml
-- include: mc.yml
-- include: vim.yml
-- include: zsh.yml
+- name: Put authorized_key
+  authorized_key:
+    user: "vagrant"
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  ignore_errors: true
 
-- include: post.yml
+- name: Install Common tools
+  apt: "name={{item}} state=latest"
+  with_items: "{{common_tools}}"
+
+- name: Put configs
+  copy:
+    src: configs/
+    dest: "{{item.home}}"
+    owner: "{{item.owner}}"
+    group: "{{item.group}}"
+  with_items: "{{common_users}}"
+
+- name: Vim extract
+  shell: "tar xzf {{item.home}}/vim.tgz -C {{item.home}} && rm {{item.home}}/vim.tgz"
+  with_items: "{{common_users}}"
+
+- name: Vim permissions
+  shell: "chown -R {{item.owner}}:{{item.group}} {{item.home}}/.vim"
+  with_items: "{{common_users}}"
+
+# - name: Host
+#   shell: 'echo "10.0.2.2    {{ hostname }}" >> /etc/hosts'
+#   tags: ['post']

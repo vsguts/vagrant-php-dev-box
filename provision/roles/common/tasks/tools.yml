@@ -1,7 +1,0 @@
----
-
-- name: Htop
-  apt: name=htop state=present
-
-- name: Git
-  apt: name=git state=present

@@ -9,4 +9,4 @@ PROVISION_TAGS    = "apt,webserver,common"
 # Also you can list the tags separated by commas.
 #
 # Example:
-# PROVISION_TAGS = "webserver,php,apt"
+# PROVISION_TAGS = "apt,python,common"

@@ -9,4 +9,6 @@
     - { role: php,     tags: ['webserver', 'php'] }
     - { role: postfix, tags: ['webserver', 'postfix'] }
     - { role: redis,   tags: ['webserver', 'redis'] }
+    - { role: python,  tags: ['python'] }
+    - { role: erlang,  tags: ['erlang'] }
     - { role: common,  tags: ['common'] }

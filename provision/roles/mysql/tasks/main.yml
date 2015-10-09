@@ -1,21 +1,17 @@
 ---
 
 - name: MySQL Ansible dependencies
-  apt: name=python-mysqldb state=present
+  apt: name=python-mysqldb state=latest
   when: ansible_os_family == "Debian"
   tags:
     - mysql
     - install
 
 - name: MySQL server
-  apt:
-    name=mysql-server
-    state=present
+  apt: name=mysql-server state=latest
 
 - name: MySQL client
-  apt:
-    name=mysql-client
-    state=present
+  apt: name=mysql-client state=latest
 
 - name: MySQL root password
   mysql_user:

@@ -1,6 +1,6 @@
 ---
 - name: Install apache2
-  apt: name=apache2 state=present
+  apt: name=apache2 state=latest
 
 - name: Apache2 Enable Modules
   shell: "a2enmod {{item}}"

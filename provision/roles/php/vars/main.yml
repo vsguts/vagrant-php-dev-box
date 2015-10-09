@@ -7,6 +7,7 @@ php_modules:
   - php5-redis
   - php5-imap
   - php5-curl
+  - php5-gd
 
 php_config_options:
   - { from: "display_errors = Off", to: "display_errors = On" }

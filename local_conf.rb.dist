@@ -4,6 +4,8 @@ HOSTNAME          = "dev"
 RAM               = "512"
 APPLICATION_PATH  = "../app"
 
+COMPOSER_TOKEN    = ""
+
 PROVISION_TAGS    = "apt,webserver,common"
 
 # Also you can list the tags separated by commas.

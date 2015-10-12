@@ -5,6 +5,7 @@ PROJECT          ||= "dev"
 HOSTNAME         ||= "dev"
 RAM              ||= "512"
 APPLICATION_PATH ||= "../app"
+COMPOSER_TOKEN   ||= ""
 PROVISION_TAGS   ||= "apt,webserver,common"
 
 File.open('./provision/inventory', 'w') { |file|
@@ -60,6 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.inventory_path = "provision/inventory"
     ansible.extra_vars = {
       hostname: HOSTNAME,
+      composer_token: COMPOSER_TOKEN,
     }
   end
 

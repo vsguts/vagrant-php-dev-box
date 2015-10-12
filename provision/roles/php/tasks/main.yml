@@ -20,18 +20,4 @@
   notify:
     - restart apache
 
-
-- name: Composer exists?
-  stat:
-    path=/usr/local/bin/composer
-  register: COMPOSER_STAT
-
-- name: Put composer
-  copy:
-    src=composer.phar
-    dest=/usr/local/bin/composer
-    mode=755
-    owner=root
-    group=root
-  when: (not COMPOSER_STAT.stat.exists)
-
+- include: composer.yml

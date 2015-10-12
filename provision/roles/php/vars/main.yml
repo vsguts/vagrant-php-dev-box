@@ -2,6 +2,7 @@
 php_modules:
   - php-pear
   - php5-mysql
+  - php5-sqlite
   - php5-dev
   - php5-mcrypt
   - php5-redis

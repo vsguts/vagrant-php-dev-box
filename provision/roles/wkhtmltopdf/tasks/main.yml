@@ -1,0 +1,28 @@
+---
+- name: Install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items: "{{dependencies}}"
+
+- name: Wkhtmltopdf exists?
+  stat:
+    path=/usr/local/bin/wkhtmltopdf
+  register: WKHTML_STAT
+
+- name: Download wkhtmltopdf
+  get_url: url={{download_url}} dest=/tmp/wkhtmltox.tar.xz
+  when: (not WKHTML_STAT.stat.exists)
+
+- name: Extract wkhtmltopdf
+  # unarchive: src=/tmp/wkhtmltox.tar.xz dest=/tmp remote_src=yes
+  shell: cd /tmp && tar xf wkhtmltox.tar.xz
+  when: (not WKHTML_STAT.stat.exists)
+
+- name: Chown bin
+  shell: chown root:root /tmp/wkhtmltox/bin/wkhtmltopdf
+  when: (not WKHTML_STAT.stat.exists)
+
+- name: Cp bin
+  shell: cp /tmp/wkhtmltox/bin/wkhtmltopdf /usr/local/bin
+  when: (not WKHTML_STAT.stat.exists)

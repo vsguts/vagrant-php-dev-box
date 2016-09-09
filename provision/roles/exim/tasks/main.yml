@@ -1,0 +1,9 @@
+---
+- name: Exim4
+  apt: name=exim4 state=present
+
+- name: Config
+  sudo: yes
+  template: src=update-exim4.conf.conf.j2 dest=/etc/exim4/update-exim4.conf.conf
+  notify:
+    - restart exim

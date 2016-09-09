@@ -1,6 +1,7 @@
 .vagrant
 local_conf.rb
 provision/inventory
+provision/playbook.retry
 exchange
 
 *.bak

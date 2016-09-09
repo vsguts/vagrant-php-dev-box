@@ -1,0 +1,6 @@
+---
+- name: Less
+  npm:
+    name: less
+    global: yes
+    state: present

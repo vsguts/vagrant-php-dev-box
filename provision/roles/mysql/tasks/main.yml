@@ -1,48 +1,82 @@
 ---
+- name: Add Percona apt signing key
+  sudo: yes
+  apt_key: keyserver=keys.gnupg.net id=1C4CBDCDCD2EFD2A state=present
 
-- name: MySQL Ansible dependencies
-  apt: name=python-mysqldb state=latest
+- name: Add Percona repository
+  sudo: yes
+  apt_repository: repo='deb http://repo.percona.com/apt trusty main' state=present
+  register: result
+
+- name: Add Percona source repository
+  sudo: yes
+  apt_repository: repo='deb-src http://repo.percona.com/apt trusty main' state=present
+
+- name: Update apt cache
+  sudo: yes
+  apt: update_cache=yes
+  when: result.changed == "True"
+
+- name: Install python packages
+  sudo: yes
+  apt: pkg={{ item }} state=present
+  with_items:
+    - python-pycurl
+    - python-mysqldb
   when: ansible_os_family == "Debian"
-  tags:
-    - mysql
-    - install
 
-- name: MySQL server
-  apt: name=mysql-server state=latest
+- name: Install Percona packages
+  sudo: yes
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - percona-server-common-5.6
+    - percona-server-client-5.6
+    - percona-server-server-5.6
+  environment:
+    DEBIAN_FRONTEND: noninteractive
 
-- name: MySQL client
-  apt: name=mysql-client state=latest
+- name: Create Mysql configuration file
+  sudo: yes
+  template: src=server.my.cnf.j2 dest=/etc/mysql/my.cnf
+  notify:
+  - restart mysql
 
-- name: MySQL root password
+- name: Update mysql root password for all root accounts
+  sudo: yes
   mysql_user:
     name: root
+    host: "{{ item }}"
     password: "{{ mysql_root_password }}"
-    login_user: root
-    login_password: ""
-  ignore_errors: true
-
-- name: MySQL start service
-  service: name=mysql state=started
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  notify:
+  - restart mysql
 
 - name: MySQL custom user
   mysql_user:
-    host: "%"
+    host: "{{ item }}"
     name: "{{ mysql_user }}"
     password: "{{ mysql_password }}"
     login_user: root
     login_password: "{{ mysql_root_password }}"
     check_implicit_admin: yes
     priv: "*.*:ALL,GRANT"
-
-- name: MySQL Put .my.cnf
-  template:
-    src=my.cnf.j2
-    dest="{{ item.home }}/.my.cnf"
-    owner="{{ item.user }}"
-    group="{{ item.group }}"
   with_items:
-    - { user: "vagrant", group: "vagrant", home: "/home/vagrant" }
-    - { user: "root", group: "root", home: "/root" }
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: "mysql_user is defined"
+  notify:
+    - restart mysql
 
-- name: MySQL bind addr
-  shell: sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf #FIXME
+- name: Copy .my.cnf file with user password credentials
+  template: src=user.my.cnf.j2 dest=/home/{{ansible_user}}/.my.cnf mode=0600 owner={{ansible_user}} group={{ansible_user}}
+  when: (mysql_user is defined) and (ansible_user != "root")
+
+- name: Copy .my.cnf file with root password credentials
+  sudo: yes
+  template: src=root.my.cnf.j2 dest=~/.my.cnf mode=0600

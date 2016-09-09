@@ -2,13 +2,18 @@
 - hosts: all
   sudo: true
   roles:
-    - { role: apt,     tags: ['apt'] }
-    - { role: mysql,   tags: ['webserver', 'database', 'mysql'] }
-    - { role: sqlite,  tags: ['webserver', 'database', 'sqlite'] }
-    - { role: apache,  tags: ['webserver', 'apache', 'php'] }
-    - { role: php,     tags: ['webserver', 'php'] }
-    - { role: postfix, tags: ['webserver', 'postfix'] }
-    - { role: redis,   tags: ['webserver', 'redis'] }
-    - { role: python,  tags: ['python'] }
-    - { role: erlang,  tags: ['erlang'] }
-    - { role: common,  tags: ['common'] }
+    - { role: apt,         tags: ['apt'] }
+    - { role: mysql,       tags: ['webserver', 'database', 'mysql'] }
+    - { role: sqlite,      tags: ['webserver', 'database', 'sqlite'] }
+    - { role: apache,      tags: ['webserver', 'apache'] }
+    - { role: php,         tags: ['webserver', 'php'] }
+    - { role: redis,       tags: ['webserver', 'redis'] }
+    - { role: less,        tags: ['webserver', 'less'] }
+    - { role: phantomjs,   tags: ['phantomjs'] }
+    - { role: python,      tags: ['python'] }
+    - { role: nodejs,      tags: ['nodejs'] }
+    - { role: erlang,      tags: ['erlang'] }
+    - { role: postfix,     tags: ['postfix'] }
+    - { role: exim,        tags: ['exim'] }
+    - { role: wkhtmltopdf, tags: ['wkhtmltopdf'] }
+    - { role: common,      tags: ['common'] }

@@ -1,0 +1,15 @@
+---
+- name: Node fixes
+  sudo: true
+  file:
+    src: /usr/bin/nodejs
+    dest: /usr/bin/node
+    owner: root
+    group: root
+    state: link
+
+- name: PhantomJS
+  npm:
+    name: phantomjs
+    global: yes
+    state: present

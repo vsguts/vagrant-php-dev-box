@@ -8,6 +8,7 @@ APPLICATION_PATH ||= "../app"
 COMPOSER_TOKEN   ||= ""
 PROVISION_TAGS   ||= "apt,webserver,common"
 
+# Ansible workaround
 File.open('./provision/inventory', 'w') { |file|
   file.puts "[vagrant]"
   file.puts INTERNAL_IP

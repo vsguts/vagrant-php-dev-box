@@ -20,4 +20,9 @@
   notify:
     - restart apache
 
+- name: PHP put xdebug config
+  template:
+    src=xdebug.ini.j2
+    dest=/etc/php5/mods-available/xdebug.ini
+
 - include: composer.yml

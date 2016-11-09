@@ -9,3 +9,4 @@ exchange
 *.sublime*
 *.sw*
 *~
+.idea

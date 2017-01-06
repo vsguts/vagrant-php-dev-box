@@ -1,22 +1,19 @@
 ---
 php_modules:
   - php-pear
-  - php5-mysql
-  - php5-sqlite
-  - php5-dev
-  - php5-mcrypt
-  - php5-redis
-  - php5-imap
-  - php5-curl
-  - php5-gd
-  - php5-intl
-  - php5-xdebug
-
-php_config_options:
-  - { from: "display_errors = Off", to: "display_errors = On" }
-  - { from: "post_max_size = 8M", to: "post_max_size = 128M" }
-  - { from: "upload_max_filesize = 2M", to: "upload_max_filesize = 122M" }
-  - { from: "session.gc_maxlifetime = 1440", to: "session.gc_maxlifetime = 86400" }
+  - php-mysql
+  - php-mcrypt
+  - php-redis
+  - php-imap
+  - php-curl
+  - php-gd
+  - php-intl
+  - php-mbstring
+  - php-bcmath
+  - php-soap
+  - php-sqlite3
+  - php-dev
+  - php-xdebug
 
 php_enable_modules:
   - mcrypt

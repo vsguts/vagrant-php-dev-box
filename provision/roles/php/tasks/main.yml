@@ -1,28 +1,42 @@
 ---
 - name: Install PHP
-  apt: name=php5 state=latest
+  apt: name=php7.0 state=present
+
+- name: Install mod php
+  apt: name=libapache2-mod-php7.0 state=present
 
 - name: Install PHP dependencies
-  apt: "name={{item}} state=latest"
+  apt: "name={{item}} state=present"
   with_items: "{{php_modules}}"
   notify:
     - restart apache
 
-- name: PHP configuring
-  shell: "sed -i 's/{{ item.from }}/{{ item.to }}/g' /etc/php5/apache2/php.ini"
-  with_items: "{{php_config_options}}"
-  notify:
-    - restart apache
+# - name: PHP configuring
+#   shell: "sed -i 's/{{ item.from }}/{{ item.to }}/g' /etc/php5/apache2/php.ini"
+#   with_items: "{{php_config_options}}"
+#   notify:
+#     - restart apache
 
 - name: PHP enable modules
-  shell: "php5enmod {{item}}"
+  shell: "phpenmod {{item}}"
   with_items: "{{php_enable_modules}}"
   notify:
     - restart apache
 
-- name: PHP put xdebug config
+- name: Put apache2 php.ini
+  become: yes
   template:
-    src=xdebug.ini.j2
-    dest=/etc/php5/mods-available/xdebug.ini
+    src: apache.php.ini.j2
+    dest: /etc/php/7.0/apache2/php.ini
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - restart apache
+
+# - name: PHP put xdebug config
+#   template:
+#     src=xdebug.ini.j2
+#     dest=/etc/php7.0/mods-available/xdebug.ini
 
 - include: composer.yml

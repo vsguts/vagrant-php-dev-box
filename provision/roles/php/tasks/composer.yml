@@ -6,20 +6,22 @@
   register: COMPOSER_STAT
 
 - name: Put composer
-  copy:
-    src=composer.phar
-    dest=/usr/local/bin/composer
-    mode=755
-    owner=root
-    group=root
+  shell: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   when: (not COMPOSER_STAT.stat.exists)
 
+- name: Chmod composer
+  file:
+    dest: /usr/local/bin/composer
+    mode: "0755"
+    owner: root
+    group: root
+
 - name: Composer token root
-  shell: "composer config -g github-oauth.github.com {{composer_token}}"
-  sudo: true
-  when: composer_token != ""
+  shell: "composer config -g github-oauth.github.com {{token}}"
+  become: true
+  when: composer.token is defined
 
 - name: Composer token user
-  shell: "composer config -g github-oauth.github.com {{composer_token}}"
-  sudo: false
-  when: composer_token != ""
+  shell: "composer config -g github-oauth.github.com {{token}}"
+  become: false
+  when: composer.token is defined

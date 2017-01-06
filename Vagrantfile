@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   case ENV['VAGRANT_DEFAULT_PROVIDER'].downcase
   when "parallels"
 
-    config.vm.box = "parallels/ubuntu-14.04"
+    config.vm.box = "parallels/ubuntu-16.04"
     config.vm.synced_folder APPLICATION_PATH, "/var/www/html"
     config.vm.provider "parallels" do |v|
       v.memory = RAM
@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   else
 
-    config.vm.box = "ubuntu/trusty64"
+    config.vm.box = "ubuntu/xenial64"
 
     config.vm.synced_folder APPLICATION_PATH, "/var/www/html", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc']
     # :mount_options => ["udp", "dmode=775", "fmode=774", "uid=33", "gid=33", "noac", "sync", "lookupcache=none" ]

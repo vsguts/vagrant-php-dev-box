@@ -1,24 +1,35 @@
 ---
-- name: Add Percona apt signing key
-  sudo: yes
-  apt_key: keyserver=keys.gnupg.net id=1C4CBDCDCD2EFD2A state=present
+#- name: Add Percona apt signing key
+#  become: yes
+#  apt_key: keyserver=keys.gnupg.net id=1C4CBDCDCD2EFD2A state=present
+#
+#- name: Add Percona repository
+#  become: yes
+#  apt_repository: repo='deb http://repo.percona.com/apt xenial main' state=present
+#  register: result
+#
+#- name: Add Percona source repository
+#  become: yes
+#  apt_repository: repo='deb-src http://repo.percona.com/apt xenial main' state=present
 
-- name: Add Percona repository
-  sudo: yes
-  apt_repository: repo='deb http://repo.percona.com/apt trusty main' state=present
-  register: result
+- name: Download deb package
+  become: yes
+  shell: wget https://repo.percona.com/apt/percona-release_0.1-4.$(lsb_release -sc)_all.deb
+  args:
+    chdir: ~
 
-- name: Add Percona source repository
-  sudo: yes
-  apt_repository: repo='deb-src http://repo.percona.com/apt trusty main' state=present
+- name: Install deb package
+  become: yes
+  shell: dpkg -i percona-release_0.1-4.$(lsb_release -sc)_all.deb
+  args:
+    chdir: ~
 
 - name: Update apt cache
-  sudo: yes
+  become: yes
   apt: update_cache=yes
-  when: result.changed == "True"
 
 - name: Install python packages
-  sudo: yes
+  become: yes
   apt: pkg={{ item }} state=present
   with_items:
     - python-pycurl
@@ -26,8 +37,8 @@
   when: ansible_os_family == "Debian"
 
 - name: Install Percona packages
-  sudo: yes
-  apt: pkg={{ item }} state=present update_cache=yes
+  become: yes
+  apt: pkg={{ item }} state=present
   with_items:
     - percona-server-common-5.6
     - percona-server-client-5.6
@@ -36,13 +47,13 @@
     DEBIAN_FRONTEND: noninteractive
 
 - name: Create Mysql configuration file
-  sudo: yes
+  become: yes
   template: src=server.my.cnf.j2 dest=/etc/mysql/my.cnf
   notify:
-  - restart mysql
+    - restart mysql
 
 - name: Update mysql root password for all root accounts
-  sudo: yes
+  become: yes
   mysql_user:
     name: root
     host: "{{ item }}"
@@ -78,5 +89,5 @@
   when: (mysql_user is defined) and (ansible_user != "root")
 
 - name: Copy .my.cnf file with root password credentials
-  sudo: yes
+  become: yes
   template: src=root.my.cnf.j2 dest=~/.my.cnf mode=0600

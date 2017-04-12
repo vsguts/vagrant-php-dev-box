@@ -3,6 +3,7 @@ php_modules:
   - php-pear
   - php-mysql
   - php-mcrypt
+  - php-memcached
   - php-redis
   - php-imap
   - php-curl

@@ -12,6 +12,7 @@ php_modules:
   - php-mbstring
   - php-bcmath
   - php-soap
+  - php-zip
   - php-sqlite3
   - php-dev
   - php-xdebug

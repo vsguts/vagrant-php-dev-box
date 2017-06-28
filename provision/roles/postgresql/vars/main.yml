@@ -1,0 +1,4 @@
+---
+pgsql_postgres_password: postgres
+pgsql_user: gvs
+pgsql_password: gvs

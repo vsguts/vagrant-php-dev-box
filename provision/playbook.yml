@@ -4,6 +4,7 @@
   roles:
     - { role: apt,         tags: ['apt'] }
     - { role: mysql,       tags: ['webserver', 'database', 'mysql'] }
+    - { role: postgresql,  tags: ['webserver', 'database', 'postgresql'] }
     - { role: sqlite,      tags: ['webserver', 'database', 'sqlite'] }
     - { role: apache,      tags: ['webserver', 'apache'] }
     - { role: php,         tags: ['webserver', 'php'] }

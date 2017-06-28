@@ -16,6 +16,7 @@ php_modules:
   - php-sqlite3
   - php-dev
   - php-xdebug
+  - php-pgsql
 
 php_enable_modules:
   - mcrypt

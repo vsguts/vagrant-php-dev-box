@@ -41,7 +41,7 @@
     owner="{{ item.user }}"
     group="{{ item.group }}"
   with_items:
-    - { user: "vagrant", group: "vagrant", home: "/home/vagrant" }
+    - { user: "ubuntu", group: "ubuntu", home: "/home/ubuntu" }
     - { user: "root", group: "root", home: "/root" }
 
 - name: MySQL bind addr

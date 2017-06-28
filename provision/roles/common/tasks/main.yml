@@ -2,7 +2,7 @@
 
 - name: Put authorized_key
   authorized_key:
-    user: "vagrant"
+    user: "ubuntu"
     key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
   ignore_errors: true
 

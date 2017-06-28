@@ -3,9 +3,9 @@ common_users:
   - home: /root
     owner: root
     group: root
-  - home: /home/vagrant
-    owner: vagrant
-    group: vagrant
+  - home: /home/ubuntu
+    owner: ubuntu
+    group: ubuntu
 
 common_tools:
   - ctags
@@ -16,3 +16,4 @@ common_tools:
   - zsh
   - tmux
   - curl
+  - supervisor

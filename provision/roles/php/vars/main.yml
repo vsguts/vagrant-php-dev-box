@@ -17,6 +17,7 @@ php_modules:
   - php-dev
   - php-xdebug
   - php-pgsql
+  - php-geoip
 
 php_enable_modules:
   - mcrypt
